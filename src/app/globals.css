@@ -1,33 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-rgb: 255, 229, 0;
+  --secondary-rgb: 33, 33, 33;
+  --background-rgb: 255, 252, 241;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  :root {}
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-background text-base
+}
+
+@layer base {
+  h2 {
+    @apply text-2xl
+  }
+  h3 {
+    @apply text-base font-bold
+  }
+  input {
+    @apply px-6 py-3 rounded-full border-hidden focus:outline-none focus:outline-primary min-w-0;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .auctions-container {
+    @apply grid grid-cols-5 gap-x-5 gap-y-6 overflow-auto;
   }
 }
