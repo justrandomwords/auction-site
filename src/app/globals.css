@@ -4,42 +4,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
-  --primary-rgb: 255, 229, 0;
-  --secondary-rgb: 33, 33, 33;
-  --background-rgb: 255, 252, 241;
+	--primary-rgb: 255, 229, 0;
+	--secondary-rgb: 33, 33, 33;
+	--background-rgb: 255, 252, 241;
+
+	--dark-rgb: 21, 21, 21;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {}
+	:root {
+	}
 }
 
 * {
-  margin: 0;
-  box-sizing: border-box;
+	margin: 0;
+	box-sizing: border-box;
 }
 
 body {
-  @apply bg-background text-base
+	@apply bg-background text-base;
 }
 
 @layer base {
-  h2 {
-    @apply text-2xl
-  }
-  h3 {
-    font-size: 1.8rem;
-    line-height: 2.3rem
-  }
-  h4 {
-    @apply text-base;
-  }
-  input {
-    @apply px-6 py-3 rounded-full border-hidden focus:outline-none focus:outline-primary min-w-0;
-  }
+	h2 {
+		@apply text-2xl;
+	}
+	h3 {
+		font-size: 1.8rem;
+		line-height: 2.3rem;
+	}
+	h4 {
+		@apply text-base;
+	}
+	input {
+		@apply px-6 py-3 rounded-full border-hidden focus:outline-none focus:outline-primary min-w-0;
+	}
 }
 
 @layer utilities {
-  .auctions-container {
-    @apply grid grid-cols-5 gap-x-5 gap-y-6 overflow-auto;
-  }
+	.auctions-container {
+		@apply grid grid-cols-5 gap-x-5 gap-y-6 overflow-auto;
+	}
 }

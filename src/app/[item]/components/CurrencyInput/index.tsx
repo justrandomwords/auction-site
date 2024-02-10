@@ -1,4 +1,5 @@
 'use client'
+import { ChangeEvent } from 'react'
 import MaskedInput from 'react-text-mask'
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
@@ -13,24 +14,31 @@ const defaultMaskOptions = {
 	integerLimit: 7, // limit length of integer numbers
 	allowNegative: false,
 	allowLeadingZeroes: false,
+	maskOptions: {},
 }
 
-const CurrencyInput = ({ maskOptions, ...inputProps }: CurrencyInput.Props) => {
+const CurrencyInput = ({
+	maskOptions,
+	fullWidth,
+	...inputProps
+}: CurrencyInput.Props) => {
 	const currencyMask = createNumberMask({
 		...defaultMaskOptions,
 		...maskOptions,
 	})
 
-	return <MaskedInput mask={currencyMask} {...inputProps} />
-}
-
-CurrencyInput.defaultProps = {
-	inputMode: 'numeric',
-	maskOptions: {},
+	return (
+		<MaskedInput
+			style={{ width: fullWidth ? '100%' : 'auto' }}
+			mask={currencyMask}
+			{...inputProps}
+		/>
+	)
 }
 
 declare namespace CurrencyInput {
 	type Props = {
+		fullWidth?: boolean
 		inputMode?:
 			| 'search'
 			| 'text'
@@ -40,7 +48,9 @@ declare namespace CurrencyInput {
 			| 'url'
 			| 'email'
 			| 'decimal'
-		maskOptions: MaskOptions
+		maskOptions?: MaskOptions
+		value?: string
+		onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 	}
 
 	type MaskOptions = {

@@ -1,0 +1,5 @@
+.button {
+	background-color: rgb(var(--dark-rgb));
+	color: white;
+	width: 12.3125rem;
+}
