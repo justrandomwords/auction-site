@@ -3,12 +3,13 @@
 import { TODO } from "../TODO"
 import PrimaryButton from "../PrimaryButton"
 import { FormValues } from "@/app/myauctions/_components/ParameterForm/types";
+import Image from 'next/image'
 
 type AuctionCardProps = {
   id: string,
   title: string,
   startPrice: number,
-  time: TODO,
+  duration: TODO,
   previewImage: string,
   type?: 'view' | 'edit' | 'closed' | 'sold'
   buttonClick?: (values: FormValues) => void,
@@ -18,20 +19,24 @@ export default function AuctionCard({
   id,
   title,
   startPrice,
-  time,
+  duration,
   previewImage,
   type='view',
   buttonClick,
 }: AuctionCardProps) {
   function test() { // Bad
     if (buttonClick)
-      buttonClick({id, title, startPrice, time});
+      buttonClick({id, title, startPrice, duration});
   }
 
   return (
-    <div className={`group bg-gray-50 mb-[1.5rem] bg-center bg-cover rounded-lg cursor-pointer
-    ${type === 'closed' && 'opacity-50'}`} 
-    style={{background: `url(${previewImage})`}}>
+    <div className={`relative group bg-gray-50 mb-[1.5rem] bg-center bg-cover rounded-lg cursor-pointer
+    ${type === 'closed' && 'opacity-50'}`}>
+      <Image
+        src={previewImage}
+        alt='previewImage'
+        fill
+      />
       <div className='relative grid items-end text-background aspect-square bg-gradient-to-t from-secondary/50 px-4 py-2 rounded-lg'>
         <p className={`absolute top-0 right-0 m-4 bg-background text-secondary text-sm font-semibold rounded-full px-3 py-0 
         ${type === 'closed' && 'text-red-500'}
@@ -39,7 +44,7 @@ export default function AuctionCard({
           { 
             type === 'closed' ? 'Closed': 
             type === 'sold' ? 'Sold':
-            time
+            duration
           }
         </p>
         <div>

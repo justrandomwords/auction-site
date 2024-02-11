@@ -4,7 +4,10 @@ export type FormValues = {
   id: string,
   title: string,
   startPrice: number,
-  time: TODO,
+  duration: string,
+  status: boolean,
+  description: string,
+  images: string[],
 }
 
 export type FormType = 'create' | 'update' | undefined;

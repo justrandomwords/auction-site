@@ -9,8 +9,9 @@ export default async function Header() {
 			<div>Site Name</div>
 			{!data ?
 				<div className='flex gap-6'>
-					<PrimaryButton className='bg-white'>Log in</PrimaryButton>
-					<PrimaryButton className='bg-primary'>Registration</PrimaryButton>
+					<Link className='bg-white' href='/login'>Log in</Link>
+					<Link className='bg-primary' href='/register'>Registration</Link>
+
 				</div>
 				:
 				<>

@@ -7,10 +7,12 @@ import History from './_components/History'
 import s from './page.module.css'
 import ImageNavigator from './_components/ImageNavigator'
 import { FullAuctionData } from '../_types/AuctionData'
+import { FormEvent } from "react";
+
 
 interface Props {
 	params: {
-		item: string
+		auctionId: string
 	}
 }
 type TransformerKey = '10' | '50' | '100' | '1.5' | '2.0'
@@ -23,7 +25,7 @@ const transformer: Record<TransformerKey, string> = {
 	'2.0': '2x',
 }
 
-export default function AuctionPage({ params: { item } }: Props) {
+export default function AuctionPage({ params: { auctionId } }: Props) {
 	const [ auctionData, setAuctionData ] = useState<FullAuctionData | undefined>(undefined);
 
 	function getFullAuctionData() {
@@ -37,6 +39,21 @@ export default function AuctionPage({ params: { item } }: Props) {
 				console.log(data.history);
 				
 			})
+	}
+
+	function Bet(event: FormEvent<HTMLFormElement>) {
+		const formData = new FormData(event.currentTarget)
+		const amount = formData.get('amount')
+
+		fetch('api/set-bet', {
+			method: 'POST',
+			body: JSON.stringify({ 
+				id: auctionId,
+				amount: amount,
+			})
+		})
+			.then(responde => responde.json())
+			.then(data => console.log(data.history))
 	}
 
 	useEffect(() => {
@@ -98,17 +115,13 @@ export default function AuctionPage({ params: { item } }: Props) {
 							<p className='text-xl font-semibold'>12:02:05</p>
 						</div>
 					</div>
-					<div className='flex justify-between gap-8'>
-						<CurrencyInput
-							fullWidth
-							value={auctionData.price.toString()}
-							onChange={(e: React.FormEvent<HTMLInputElement>) => {
-								const newVal = parsePrice(e.currentTarget.value)
-								setCurrentValue(newVal)
-							}}
+					<form className='flex justify-between gap-8' onSubmit={Bet}>
+						<input 
+							placeholder='100'
+							name="amount"
 						/>
 						<PrimaryButton className={s.button}>Place bit</PrimaryButton>
-					</div>
+					</form>
 		
 					<div className='grid grid-flow-col gap-4'>
 						<PrimaryButton data-val='10' onClick={handleAddValue}>

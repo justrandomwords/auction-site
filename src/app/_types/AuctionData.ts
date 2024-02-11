@@ -3,7 +3,7 @@ export interface ShortAuctionData {
 	title:     string;
 	price:     number;
 	startTime: string;
-	image:     string;
+	images:    string;
 }
 
 

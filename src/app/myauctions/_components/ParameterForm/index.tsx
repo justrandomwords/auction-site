@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import { InputField } from "./InputField";
 import { FormType, FormValues } from "./types";
 import { useEdgeStore } from "@/lib/edgestore";
+import { APIurl } from "../../../api/backendAPI";
 
 type ParameterFromProps = {
   type: FormType,
@@ -20,7 +21,7 @@ export default function ParameterFrom({
   const title = type && type.charAt(0).toUpperCase() + type.slice(1);
 
   const [ parameterForm, setParameterForm ] = useState(defaultValues); 
-  const [ file, setFile ] = useState<File>();
+  const [ files, setFiles ] = useState<FileList>();
   const { edgestore } = useEdgeStore();
 
   function updateParameterForm(e: React.FormEvent<HTMLInputElement>) {
@@ -41,18 +42,30 @@ export default function ParameterFrom({
     const startPrice = formData.get('startPrice')
     const status = formData.get('status')
     const description = formData.get('description')
+    const images = formData.get('images')
+    const duration = formData.get('duration')
   
-    // const response = await fetch('/api/auth/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ title, startPrice, status, description }),
-    // })
-    // if (response.ok) {
-    //   router.push('/profile')
-    // } else {
-    //   // Handle errors
-    // }
-    console.log({ title, startPrice, status, description });
+    fetch(`${APIurl}/create-auc`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          title: title,
+          start_price: startPrice,
+          description: description,
+          images: JSON.stringify(parameterForm.images),
+          duration: duration,
+      }),
+      credentials: 'include',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success)
+          alert('Сталася помилка')
+          console.log(data)
+      })
+      .catch(error => console.error('Помилка', error));
   }
 
 
@@ -75,32 +88,46 @@ export default function ParameterFrom({
           />
           <InputField 
             name='duration' 
+            value={parameterForm.duration} 
             onChange={updateParameterForm}
             title='Duration' 
-            type='time'
           />
         </div>
         <InputField 
           name='description' 
           title='Description'
+          value={parameterForm.description} 
           onChange={updateParameterForm}
         />
         <InputField 
           name='images' 
           title='Images' 
           type='file' 
-          onChange={e => {setFile(e.target.files?.[0])}}
+          onChange={e => {
+            if(e.target.files)
+              setFiles(e.target.files)
+          }}
           multiple
         />
-        <button onClick={async () => {
-          if (file) {
-            const res = await edgestore.AuctionsImages.upload({ file });
-            console.log(res);
-            // TODO
+        <div onClick={async () => {
+          if (files) {
+            const URLs: string[] = []; 
+
+            Array.from(files).map(async (file) => {
+              const res = await edgestore.AuctionsImages.upload({ file });
+              URLs.push(res.url);
+            });
+
+            console.log(URLs);
+
+            setParameterForm(prevParameterForm => ({
+              ...prevParameterForm,
+              images: URLs,
+            }))
           }
         }}>
           Upload
-        </button>
+        </div>
       </div>
       <div className='flex justify-between'>
         <PrimaryButton className='bg-secondary text-white px-8' onClick={closeClick}>Cancel</PrimaryButton>
