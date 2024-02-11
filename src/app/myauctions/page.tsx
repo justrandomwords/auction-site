@@ -11,9 +11,19 @@ export default function MyActions() {
 	const [defaultFormValues, setDefaultFormValues] = useState<FormValues>({
 		id: '',
 		title: '',
-		price: 0,
+		startPrice: 0,
 		time: '',
 	})
+
+	function createForm() {
+		setPopupStatus('create')
+		setDefaultFormValues({
+			id: '',
+			title: '',
+			startPrice: 0,
+			time: '',
+		})
+	}
 
 	function updateForm(values: FormValues) {
 		setPopupStatus('update')
@@ -34,14 +44,7 @@ export default function MyActions() {
 
 			<div
 				className='grid place-items-center bg-white rounded-lg cursor-pointer'
-				onClick={() =>
-					updateForm({
-						id: '',
-						title: '',
-						price: 0,
-						time: '',
-					})
-				}
+				onClick={() => createForm()}
 			>
 				Create auction
 			</div>
@@ -49,25 +52,28 @@ export default function MyActions() {
 				id='468'
 				type='edit'
 				title='teffghgfghst'
-				price={150}
+				startPrice={150}
 				time={'54546'}
 				buttonClick={updateForm}
+				previewImage='https://images.dog.ceo/breeds/poodle-standard/n02113799_2932.jpg'
 			/>
 			<AuctionCard
 				id='453'
 				type='closed'
 				title='test'
-				price={150}
+				startPrice={150}
 				time={'54546'}
 				buttonClick={updateForm}
+				previewImage='https://images.dog.ceo/breeds/eskimo/n02109961_18009.jpg'
 			/>
 			<AuctionCard
 				id='783'
 				type='sold'
 				title='test'
-				price={150}
+				startPrice={150}
 				time={'54546'}
 				buttonClick={updateForm}
+				previewImage='https://images.dog.ceo/breeds/spaniel-cocker/n02102318_8482.jpg'
 			/>
 		</div>
 	)

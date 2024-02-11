@@ -20,10 +20,14 @@ const config: Config = {
         primary: "rgba(var(--primary-rgb), <alpha-value>)",
         secondary: "rgba(var(--secondary-rgb), <alpha-value>)",
         background: "rgba(var(--background-rgb), <alpha-value>)",
+        positive: "rgba(32, 231, 0, <alpha-value>)",
+        negative: "rgba(255, 0, 0, <alpha-value>)",
+        empty: "rgba(224, 224, 224, <alpha-value>)"
       },
       borderRadius: {
         lg: "0.625rem",
         "2xl": "1.25rem",
+        "3xl": "1.875rem",
       },
       boxShadow: {
         form: "0px 0px 2rem rgba(0,0,0,0.1)"

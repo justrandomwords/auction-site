@@ -5,13 +5,13 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
 const defaultMaskOptions = {
 	prefix: '',
-	suffix: '$',
+	suffix: ' $',
 	includeThousandsSeparator: true,
-	thousandsSeparatorSymbol: ',',
+	thousandsSeparatorSymbol: ' ',
 	allowDecimal: true,
 	decimalSymbol: '.',
 	decimalLimit: 2, // how many digits allowed after the decimal
-	integerLimit: 7, // limit length of integer numbers
+	integerLimit: 15, // limit length of integer numbers
 	allowNegative: false,
 	allowLeadingZeroes: false,
 	maskOptions: {},

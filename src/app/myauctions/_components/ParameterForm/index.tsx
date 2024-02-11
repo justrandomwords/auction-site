@@ -16,7 +16,7 @@ export default function ParameterFrom({
   defaultValues,
   closeClick,
 }: ParameterFromProps) {
-  const title = type && type.charAt(0) + type.slice(1);
+  const title = type && type.charAt(0).toUpperCase() + type.slice(1);
 
   const [ parameterForm, setParameterForm ] = useState(defaultValues); 
 
@@ -64,10 +64,30 @@ export default function ParameterFrom({
           title='Title'
         />
         <div className='grid grid-cols-2 gap-4'>
-          <InputField name='startPrice' value={parameterForm.price} title='Start price'/>
-          <InputField name='status' title='Status'/>
+          <InputField 
+            name='startPrice' 
+            value={parameterForm.startPrice} 
+            onChange={updateParameterForm}
+            title='Start price'
+          />
+          <InputField 
+            name='duration' 
+            onChange={updateParameterForm}
+            title='Duration' 
+            type='time'
+          />
         </div>
-        <InputField name='description' title='Description'/>
+        <InputField 
+          name='description' 
+          title='Description'
+          onChange={updateParameterForm}
+        />
+        <InputField 
+          name='images' 
+          title='Images' 
+          type='file' 
+          multiple
+        />
       </div>
       <div className='flex justify-between'>
         <PrimaryButton className='bg-secondary text-white px-8' onClick={closeClick}>Cancel</PrimaryButton>

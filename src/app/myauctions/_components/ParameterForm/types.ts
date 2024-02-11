@@ -3,7 +3,7 @@ import { TODO } from "@/app/_components/TODO";
 export type FormValues = {
   id: string,
   title: string,
-  price: number,
+  startPrice: number,
   time: TODO,
 }
 
