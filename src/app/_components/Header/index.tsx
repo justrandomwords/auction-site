@@ -1,5 +1,3 @@
-'use client'
-
 import PrimaryButton from '../PrimaryButton'
 import ProfileButton from './ProfileButton';
 import Link from 'next/link';
@@ -26,3 +24,5 @@ export default async function Header() {
 		</header>
 	)
 }
+
+
