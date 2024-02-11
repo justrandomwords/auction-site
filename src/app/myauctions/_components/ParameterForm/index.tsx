@@ -4,6 +4,7 @@ import PrimaryButton from "@/app/_components/PrimaryButton";
 import { FormEvent, useState } from "react";
 import { InputField } from "./InputField";
 import { FormType, FormValues } from "./types";
+import { useEdgeStore } from "@/lib/edgestore";
 
 type ParameterFromProps = {
   type: FormType,
@@ -19,6 +20,8 @@ export default function ParameterFrom({
   const title = type && type.charAt(0).toUpperCase() + type.slice(1);
 
   const [ parameterForm, setParameterForm ] = useState(defaultValues); 
+  const [ file, setFile ] = useState<File>();
+  const { edgestore } = useEdgeStore();
 
   function updateParameterForm(e: React.FormEvent<HTMLInputElement>) {
     const { name, value } = e.currentTarget;
@@ -86,8 +89,18 @@ export default function ParameterFrom({
           name='images' 
           title='Images' 
           type='file' 
+          onChange={e => {setFile(e.target.files?.[0])}}
           multiple
         />
+        <button onClick={async () => {
+          if (file) {
+            const res = await edgestore.AuctionsImages.upload({ file });
+            console.log(res);
+            // TODO
+          }
+        }}>
+          Upload
+        </button>
       </div>
       <div className='flex justify-between'>
         <PrimaryButton className='bg-secondary text-white px-8' onClick={closeClick}>Cancel</PrimaryButton>

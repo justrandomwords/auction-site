@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import './globals.css'
 import Header from './_components/Header'
+import { EdgeStoreProvider } from '@/lib/edgestore'
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -18,8 +19,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={`${nunito.className} flex flex-col h-screen`}>
-				<Header />
-				<div className='px-11 py-14'>{children}</div>
+				<EdgeStoreProvider>
+					<Header />
+					<div className='px-11 py-14'>{children}</div>
+				</EdgeStoreProvider>
 			</body>
 		</html>
 	)
